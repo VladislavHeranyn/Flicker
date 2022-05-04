@@ -1,28 +1,43 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <Navbar />
+    <Spinner v-if="loading" />
+    <MainContent v-else />
+    <Tags />
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Navbar from "@/components/Navbar";
+import Spinner from "@/components/Spinner";
+import MainContent from "@/components/MainContent";
+import Tags from "@/components/Tags";
 
 export default {
-  name: 'App',
+  name: "App",
+  mounted() {
+    this.$store.dispatch("sendRequest", "car");
+  },
+  computed: {
+    loading: function() {
+      return this.$store.state.main.loading;
+    }
+  },
   components: {
-    HelloWorld
+    Navbar,
+    Spinner,
+    MainContent,
+    Tags
   }
-}
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Montserrat", serif;
+  letter-spacing: 1px;
+  box-sizing: border-box;
 }
 </style>
